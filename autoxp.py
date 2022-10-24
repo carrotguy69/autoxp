@@ -20,10 +20,10 @@ client = discord.Client()
 async def send():
     channel = client.get_channel(random.choice(data['channel']))
     msg = random.choice(data["messages"])
-    emoji = [x for x in channel.guild.emojis if not x.animated]
+    emoji = [x for x in channel.guild.emojis if not x.animated and x.is_usable()]
     msg = random.choice((random.choice(emoji), random.choice(data["messages"])))
     
-    print(f"[{datetime.fromtimestamp((time.time())).strftime('%A, %B %d, %Y, %I:%M %p')}] {channel.guild.name} - #{channel.mention}: {msg}")
+    print(f"[{datetime.fromtimestamp((time.time())).strftime('%A, %B %d, %Y, %I:%M:%S %p')}] {channel.guild.name} - #{channel.mention}: {msg}")
     await channel.send(msg)
 
 @client.event
