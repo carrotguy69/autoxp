@@ -1,4 +1,5 @@
-import asyncio, discord, json, random
+import asyncio, discord, json, random, time
+from datetime import datetime
 from discord.ext import commands
 
 data = None
@@ -19,8 +20,10 @@ client = discord.Client()
 async def send():
     channel = client.get_channel(random.choice(data['channel']))
     msg = random.choice(data["messages"])
+    emoji = [x for x in channel.guild.emojis if not x.animated]
+    msg = random.choice((random.choice(emoji), random.choice(data["messages"])))
     
-    print(f"sent in #{channel.mention} in {channel.guild.name} - {msg}")
+    print(f"[{datetime.fromtimestamp((time.time())).strftime('%A, %B %d, %Y, %I:%M %p')}] {channel.guild.name} - #{channel.mention}: {msg}")
     await channel.send(msg)
 
 @client.event
